@@ -4,4 +4,4 @@
 
 ## Getting started
 
-Yes let's  START !
+Click to START !
