@@ -4,4 +4,4 @@
 
 ## Let's start !
 
-Click to [START](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley "START") !
+In this project, we'll do a logiciel for videotracking
