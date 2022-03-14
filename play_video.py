@@ -21,7 +21,7 @@ class Application:
 
     def open_file(self):
         self.pause = False
-        self.filename = "/home/alexandre/Vidéos/test2.mp4"
+        self.filename = "/home/alexandre/Vidéos/test.mp4"
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -35,6 +35,7 @@ class Application:
             if self.cap.isOpened():
                 ret, frame = self.cap.read()
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+
         except:
             messagebox.showerror(title='Alert', message='End of the video.')
 
