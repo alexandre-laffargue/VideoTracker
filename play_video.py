@@ -21,7 +21,7 @@ class Application:
 
     def open_file(self):
         self.pause = False
-        self.filename = "/home/alexandre/Vidéos/test.mp4"
+        self.filename = "/net/cremi/adydalin/espaces/travail/project/colibri.mp4"
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)

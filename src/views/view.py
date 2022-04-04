@@ -3,6 +3,8 @@ import PIL.Image, PIL.ImageTk
 from PIL import Image,ImageTk
 from tkinter import RIDGE, Frame, Menu, ttk
 
+from controllers import Controller
+ 
 class View(tk.Frame):
 
     def __init__(self, parent):
@@ -24,12 +26,14 @@ class View(tk.Frame):
 
         Filesmenu.add_command(label='Charger un fichier vidéo', command=0)
         Filesmenu.add_command(label='Lire une vidéo', command=0)
-        Filesmenu.add_command(label='Quitter', command=0)
+        Filesmenu.add_command(label='Quitter', command=self.destroy)
         Filesmenu.add_separator()
         Filesmenu.add_command(label='Save', command=0)
         Filesmenu.add_command(label='Exporter (csv)', command=0)
         
         Viewmenu.add_command(label='Affichage graphique', command=0)
+
+
 
     
     def setController(self, controller):
