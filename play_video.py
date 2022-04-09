@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
+from turtle import title
 import PIL.Image, PIL.ImageTk
 import cv2
-
+from tkinter.filedialog import askopenfilename
 
 class Application:
 
@@ -21,7 +22,8 @@ class Application:
 
     def open_file(self):
         self.pause = False
-        self.filename = "/net/cremi/adydalin/espaces/travail/project/colibri.mp4"
+        listtypes = [("Fichier vidéo", ".mp4"),("Script python", ".py")]
+        self.filename = askopenfilename(title="Sélectionner une vidéo", filetypes=listtypes) 
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
