@@ -46,6 +46,8 @@ class Application:
         # Get a frame from the video source, and go to the next frame automatically
         ret, frame = self.get_frame()
         if ret:
+            print('ret')
+            print(ret)
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         if not self.pause:
