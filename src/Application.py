@@ -10,7 +10,7 @@ class Application(tk.Tk):
         super().__init__()
         self.title('Video Tracker')
         # create a video model
-        video = Video()
+        video = Video(self)
         # create a view and place it on the root window
         view = View(self)
         # create a controller

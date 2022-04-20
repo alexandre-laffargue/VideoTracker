@@ -9,21 +9,21 @@ class Controller:
         
         self.video = video
         self.view = view
-
+        self.canvas = self.view.canvas
 
     def afficher(self):
         print('b')
-        self.video.openfile(self.view)
+        self.video.openfile()
 
     def lecture(self):
         self.video.nopause()
-        self.video.play_video(self.view)
+        self.video.play_video()
 
     def pause(self):
         self.video.pause()
 
     def next_image(self):
-        self.video.next_frame(self.view)
+        self.video.next_frame()
 
             
             

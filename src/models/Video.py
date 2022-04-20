@@ -8,12 +8,16 @@ import time
 
 class Video:
 
-    def __init__(self):
+    def __init__(self, parent):
         self.cap = None
-        self.delay = 0.015 #s
+        self.delay = 15 #ms
         self.pause = None
+        ZoneVideo = Frame(parent, borderwidth = 2, relief = RIDGE)
+        ZoneVideo.grid(row = 1, column = 0)
+        self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 850)
+        self.canvas.pack()
 
-    def openfile(self, fen):
+    def openfile(self):
         print("c")
         listtypes = [("Fichier vidéo", ".mp4"),("Script python", ".py")]
         filename = askopenfilename(title="Sélectionner une vidéo", filetypes=listtypes) 
@@ -21,10 +25,9 @@ class Video:
         self.cap = cv2.VideoCapture(filename)
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        fen.canvas.config(width = video_width, height = video_height)
+        self.canvas.config(width = video_width, height = video_height)
         fframe = self.get_first_frame()
-        fframe = self.get_first_frame()
-        fen.canvas.create_image(0, 0, image = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(fframe)), anchor = NW)
+        self.canvas.create_image(0, 0, image = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(fframe)), anchor = NW)
         print('first image')
 
     def get_first_frame(self):   
@@ -40,30 +43,30 @@ class Video:
 
         except:
             pass
+
     def nopause(self):
         self.pause = False
 
     def pause(self):
         self.pause = True
 
-    def play_video(self, fen):
+    def play_video(self):
         # Get a frame from the video source, and go to the next frame automatically
+        try:
+            ret, frame = self.get_frame()
+            if ret:
+                self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+                self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            if not self.pause:
+                self.canvas.after(self.delay, self.play_video)
+        except:
+            print("fin")
+    
+    def next_frame(self):
         ret, frame = self.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            fen.canvas.create_image(0, 0, image = self.photo, anchor = NW)
-        if not self.pause:
-            print("a")
-            time.sleep(self.delay)
-            print("c")
-            self.play_video(fen)
-
-
-    def next_frame(self, fen):
-        ret, frame = self.get_frame()
-        if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            fen.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
 
     def _del(self):
         if self.cap.isOpened():

@@ -12,10 +12,9 @@ class View(tk.Frame):
         self.canvas = None
         self.parent = parent
 
-
         self.setmenu(parent)
         self.setbouton(parent)
-        self.setvideo(parent)
+
 
 
     def setController(self, controller):
@@ -57,11 +56,7 @@ class View(tk.Frame):
         BouimageP = Button(ZoneOptions,text = '|<', command= 0 )
         BouimageP.grid(row = 0, pady = 10, column = 3)
 
-    def setvideo(self, parent):
-        ZoneVideo = Frame(parent, borderwidth = 2, relief = RIDGE)
-        ZoneVideo.grid(row = 1, column = 0)
-        self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 850)
-        self.canvas.pack()
+
 
 
     def lienvideo(self):
