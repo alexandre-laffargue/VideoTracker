@@ -12,9 +12,18 @@ class Controller:
 
 
     def afficher(self):
-        print('aaa')
-        self.video.openfile
+        print('b')
+        self.video.openfile(self.view)
 
+    def lecture(self):
+        self.video.nopause()
+        self.video.play_video(self.view)
+
+    def pause(self):
+        self.video.pause()
+
+    def next_image(self):
+        self.video.next_frame(self.view)
 
             
             
