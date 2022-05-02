@@ -42,10 +42,12 @@ class Video:
             pass
 
     def nopause(self):
-        self.pause = False
+        if self.pause == True:
+            self.pause = False
 
     def putpause(self):
-        self.pause = True
+        if self.pause == False:
+            self.pause = True
 
     def play_video(self):
         # Get a frame from the video source, and go to the next frame automatically

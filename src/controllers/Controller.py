@@ -17,8 +17,9 @@ class Controller:
         self.video.next_frame()
 
     def lecture(self):
-        self.video.nopause()
-        self.video.play_video()
+        if self.video.pause == True:
+            self.video.nopause()
+            self.video.play_video()
 
     def pause(self):
         self.video.putpause()
@@ -27,14 +28,10 @@ class Controller:
         self.video.next_frame()
 
     def returnfirstimage(self):
-        self.video.putpause()
-        self.video.returnfirstframe()
-        self.video.next_frame()
+        if self.video.pause == False:
+            self.video.putpause()
+            self.video.returnfirstframe()
+        else:
+            self.video.returnfirstframe()
+            self.video.next_frame()
 
-
-            
-            
-
-        
-
-        
