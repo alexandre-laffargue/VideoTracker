@@ -48,15 +48,17 @@ class View(tk.Frame):
         ZoneOptions.grid(row = 0, column = 0)
 
         Boustart = Button(ZoneOptions,text = 'start', command=self.lienlecture)
-        Boustart.grid(row = 0, pady = 10, column = 0)
-        Boupause = Button(ZoneOptions,text = 'Pause', command= self.linkpause )
-        Boupause.grid(row = 0, pady = 10, column = 1)
+        Boustart.grid(row = 0, pady = 10, column = 2)
+        Boupause = Button(ZoneOptions,text = 'Pause', command= self.linkpause)
+        Boupause.grid(row = 0, pady = 10, column = 3)
         BouimageS = Button(ZoneOptions,text = '>|', command= self.linknextimage)
-        BouimageS.grid(row = 0, pady = 10, column = 2)
+        BouimageS.grid(row = 0, pady = 10, column = 4)
         BouimageP = Button(ZoneOptions,text = '|<', command= 0 )
-        BouimageP.grid(row = 0, pady = 10, column = 3)
-
-
+        BouimageP.grid(row = 0, pady = 10, column = 1)
+        BouimageF = Button(ZoneOptions,text = '||<', command= self.linkreturnfirstimage)
+        BouimageF.grid(row = 0, pady = 10, column = 0)
+        BouimageL = Button(ZoneOptions,text = '>||', command= 0 )
+        BouimageL.grid(row = 0, pady = 10, column = 5)
 
 
     def lienvideo(self):
@@ -71,3 +73,6 @@ class View(tk.Frame):
 
     def linknextimage(self):
         self.controller.next_image()
+
+    def linkreturnfirstimage(self):
+        self.controller.returnfirstimage()

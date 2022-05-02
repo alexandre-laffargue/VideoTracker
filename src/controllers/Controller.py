@@ -26,6 +26,12 @@ class Controller:
     def next_image(self):
         self.video.next_frame()
 
+    def returnfirstimage(self):
+        self.video.putpause()
+        self.video.returnfirstframe()
+        self.video.next_frame()
+
+
             
             
 

@@ -16,18 +16,17 @@ class Video:
         ZoneVideo.grid(row = 1, column = 0)
         self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
+        self.filename = None
 
     def openfile(self):
         print("c")
         listtypes = [("Fichier vidéo", ".mp4"),("Script python", ".py")]
-        filename = askopenfilename(title="Sélectionner une vidéo", filetypes=listtypes) 
-        print(filename)
-        self.cap = cv2.VideoCapture(filename)
+        self.filename = askopenfilename(title="Sélectionner une vidéo", filetypes=listtypes) 
+        print(self.filename)
+        self.cap = cv2.VideoCapture(self.filename)
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = video_width, height = video_height)
-        self.play_video
-        print('first image')
 
     def get_first_frame(self):   
         if self.cap.isOpened():
@@ -65,6 +64,9 @@ class Video:
         if ret and self.pause:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+
+    def returnfirstframe(self):
+        self.cap = cv2.VideoCapture(self.filename)
 
     def __del__(self):
         if self.cap.isOpened():
