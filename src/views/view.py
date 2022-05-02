@@ -1,7 +1,7 @@
 import tkinter as tk
 import PIL.Image, PIL.ImageTk
 from PIL import Image,ImageTk
-from tkinter import RIDGE, Frame, Menu, ttk, LabelFrame, Button, Canvas
+from tkinter import  CENTER, RIDGE, Frame, Menu, ttk, LabelFrame, Button, Canvas
 
  
 class View(tk.Frame):
@@ -22,8 +22,8 @@ class View(tk.Frame):
 
     def setmenu(self, parent):
         self.controller = None
-        parent.geometry('1000x600+500+300')
-        bandeau = Frame(parent, borderwidth = 2, relief = RIDGE)
+        parent.geometry('1400x700+200+100')
+        bandeau = Frame(parent, borderwidth = 2, relief = RIDGE )
         bandeau.grid(row = 0, column = 0)
 
         menuBar = Menu(parent)
@@ -34,7 +34,7 @@ class View(tk.Frame):
         menuBar.add_cascade(label='Files', menu=Filesmenu)
         menuBar.add_cascade(label='View', menu=Viewmenu)
 
-        Filesmenu.add_command(label='Charger un fichier vidéo', command=self.lienvideo) 
+        Filesmenu.add_command(label='Charger un fichier vidéo', command=self.lienvideo)
         Filesmenu.add_command(label='Lire une vidéo', command=self.lienlecture)
         Filesmenu.add_command(label='Quitter', command=exit)
         Filesmenu.add_separator()

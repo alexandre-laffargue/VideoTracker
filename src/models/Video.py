@@ -11,10 +11,10 @@ class Video:
     def __init__(self, parent):
         self.cap = None
         self.delay = 15 #ms
-        self.pause = None
+        self.pause = True
         ZoneVideo = Frame(parent, borderwidth = 2, relief = RIDGE)
         ZoneVideo.grid(row = 1, column = 0)
-        self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 850)
+        self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
 
     def openfile(self):
@@ -26,8 +26,7 @@ class Video:
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = video_width, height = video_height)
-        fframe = self.get_first_frame()
-        self.canvas.create_image(0, 0, image = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(fframe)), anchor = NW)
+        self.play_video
         print('first image')
 
     def get_first_frame(self):   
@@ -40,14 +39,13 @@ class Video:
             if self.cap.isOpened():
                 ret, frame = self.cap.read()
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-
         except:
             pass
 
     def nopause(self):
         self.pause = False
 
-    def pause(self):
+    def putpause(self):
         self.pause = True
 
     def play_video(self):
@@ -64,10 +62,10 @@ class Video:
     
     def next_frame(self):
         ret, frame = self.get_frame()
-        if ret:
+        if ret and self.pause:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
 
-    def _del(self):
+    def __del__(self):
         if self.cap.isOpened():
             self.cap.release()

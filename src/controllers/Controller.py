@@ -14,13 +14,14 @@ class Controller:
     def afficher(self):
         print('b')
         self.video.openfile()
+        self.video.next_frame()
 
     def lecture(self):
         self.video.nopause()
         self.video.play_video()
 
     def pause(self):
-        self.video.pause()
+        self.video.putpause()
 
     def next_image(self):
         self.video.next_frame()
