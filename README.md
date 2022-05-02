@@ -5,4 +5,5 @@ Prof : Problèmes de communication dans le binôme
 ## Let's start !
 
 In this project, we'll do a logiciel for videotracking
-![image.png](./image.png)
+
+![image-1.png](./image-1.png)
