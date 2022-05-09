@@ -19,7 +19,7 @@ class Video:
         self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
         self.filename = None
-        self.repere = None
+        self.repere = ( 0, 0)
         self.canwidth = None
         self.canheight = None
         self.takingrepere = False
@@ -81,13 +81,14 @@ class Video:
         self.cap = cv2.VideoCapture(self.filename)
 
     def takecoord(self, event):
-        x = self.canvas.winfo_pointerx() - self.canvas.winfo_rootx()
-        y = int(self.canheight - (self.canvas.winfo_pointery() - self.canvas.winfo_rooty()))
-        print(x,y)
+        xrep,yrep = self.repere
+        x = int(self.canvas.winfo_pointerx() - self.canvas.winfo_rootx() )
+        y = int(self.canheight - (self.canvas.winfo_pointery() - self.canvas.winfo_rooty() ))
+        print(x-xrep,y-yrep)
         if self.takingrepere:
             self.repere= (x,y)
             self.takingrepere = False
-            showinfo('Info', 'Repère placé')
+            showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", "+ str(y) + ")." )
 
 
     def takerepere(self):
