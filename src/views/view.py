@@ -44,25 +44,26 @@ class View(tk.Frame):
         Viewmenu.add_command(label='Affichage graphique', command=0)
         
     def setbouton(self, parent):
-        ZoneOptions = LabelFrame(parent, borderwidth = 2, text = 'Options', labelanchor = 'n', width = 200, height = 100)
-        ZoneOptions.grid(row = 0, column = 0)
+        ZoneBoutons = Frame(parent)
+        ZoneBoutons.grid(row = 0, column = 0)
+        ZoneOptions = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Options', labelanchor = 'n', width = 200, height = 100)
+        ZoneOptions.grid(row = 0, column = 1)
 
         Boustart = Button(ZoneOptions,text = 'start', command=self.lienlecture)
         Boustart.grid(row = 0, pady = 10, column = 2)
         Boupause = Button(ZoneOptions,text = 'Pause', command= self.linkpause)
         Boupause.grid(row = 0, pady = 10, column = 3)
-        BouimageS = Button(ZoneOptions,text = '>|', command= self.linknextimage)
+        BouimageS = Button(ZoneOptions,text = '>>|', command= self.linknextimage)
         BouimageS.grid(row = 0, pady = 10, column = 4)
-        BouimageP = Button(ZoneOptions,text = '|<', command= 0 )
+        BouimageP = Button(ZoneOptions,text = '|<<', command= 0 )
         BouimageP.grid(row = 0, pady = 10, column = 1)
-        BouimageF = Button(ZoneOptions,text = '||<', command= self.linkreturnfirstimage)
+        BouimageF = Button(ZoneOptions,text = '|<', command= self.linkreturnfirstimage)
         BouimageF.grid(row = 0, pady = 10, column = 0)
-        BouimageL = Button(ZoneOptions,text = '>||', command= 0 )
+        BouimageL = Button(ZoneOptions,text = '>|', command= 0 )
         BouimageL.grid(row = 0, pady = 10, column = 5)
-
-
+ 
+    
     def lienvideo(self):
-        print("a")
         self.controller.afficher()
 
     def lienlecture(self):

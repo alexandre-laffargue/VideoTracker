@@ -9,6 +9,7 @@ import time
 class Video:
 
     def __init__(self, parent):
+        self.capopen = False
         self.cap = None
         self.delay = 15 #ms
         self.pause = True
@@ -17,9 +18,9 @@ class Video:
         self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
         self.filename = None
+        self.repere = None
 
     def openfile(self):
-        print("c")
         listtypes = [("Fichier vidéo", ".mp4"),("Script python", ".py")]
         self.filename = askopenfilename(title="Sélectionner une vidéo", filetypes=listtypes) 
         print(self.filename)
@@ -27,6 +28,7 @@ class Video:
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = video_width, height = video_height)
+        self.capopen = True
 
     def get_first_frame(self):   
         if self.cap.isOpened():
