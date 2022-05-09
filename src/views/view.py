@@ -61,7 +61,13 @@ class View(tk.Frame):
         BouimageF.grid(row = 0, pady = 10, column = 0)
         BouimageL = Button(ZoneOptions,text = '>|', command= 0 )
         BouimageL.grid(row = 0, pady = 10, column = 5)
- 
+
+        ZonePointage = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Pointage', labelanchor = 'n', width = 200, height = 100)
+        ZonePointage.grid(row = 0,pady = 5, column = 0)
+        self.Bourepere = Button(ZonePointage,text = '+', command= self.linkrepere )
+        self.Bourepere.grid(row = 0, pady = 10, column = 0)
+        BouPointer = Button(ZonePointage,text = 'x', command= 0 )
+        BouPointer.grid(row = 0, pady = 10, column = 1)
     
     def lienvideo(self):
         self.controller.afficher()
@@ -77,3 +83,13 @@ class View(tk.Frame):
 
     def linkreturnfirstimage(self):
         self.controller.returnfirstimage()
+
+    def linkrepere(self):
+        self.controller.repere()
+        print('a')
+    
+    def changecolorred(self):
+        self.Bourepere.configure( fg="red")
+
+    def changecolorblack(self):
+        self.Bourepere.configure( fg="black")

@@ -37,3 +37,8 @@ class Controller:
             else:
                 self.video.returnfirstframe()
                 self.video.next_frame()
+
+    def repere(self):
+        if self.video.capopen:
+            self.view.changecolorred()
+            self.video.takerepere()

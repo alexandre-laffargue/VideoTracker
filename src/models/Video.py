@@ -5,6 +5,7 @@ import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter.filedialog import askopenfilename
 import time
+from tkinter.messagebox import *
 
 class Video:
 
@@ -19,6 +20,10 @@ class Video:
         self.canvas.pack()
         self.filename = None
         self.repere = None
+        self.canwidth = None
+        self.canheight = None
+        self.takingrepere = False
+
 
     def openfile(self):
         listtypes = [("Fichier vidéo", ".mp4"),("Script python", ".py")]
@@ -28,7 +33,10 @@ class Video:
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = video_width, height = video_height)
+        self.canwidth = video_width
+        self.canheight = video_height
         self.capopen = True
+        self.canvas.bind('<Button-1>', self.takecoord)
 
     def get_first_frame(self):   
         if self.cap.isOpened():
@@ -71,6 +79,25 @@ class Video:
 
     def returnfirstframe(self):
         self.cap = cv2.VideoCapture(self.filename)
+
+    def takecoord(self, event):
+        x = self.canvas.winfo_pointerx() - self.canvas.winfo_rootx()
+        y = int(self.canheight - (self.canvas.winfo_pointery() - self.canvas.winfo_rooty()))
+        print(x,y)
+        if self.takingrepere:
+            self.repere= (x,y)
+            self.takingrepere = False
+            showinfo('Info', 'Repère placé')
+
+
+    def takerepere(self):
+        if self.takingrepere:
+            self.takingrepere = False
+        else:
+            self.takingrepere = True
+
+
+
 
     def __del__(self):
         if self.cap.isOpened():
