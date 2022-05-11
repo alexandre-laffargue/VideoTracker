@@ -16,6 +16,7 @@ class View(tk.Frame):
 
         self.setmenu(parent)
         self.setbouton(parent)
+        self.setbind()
 
 
 
@@ -78,6 +79,15 @@ class View(tk.Frame):
         Bouechelle = Button(ZonePointage, text = 'scale', command = self.linkechelle)
         Bouechelle.grid(row = 0, pady = 10, column = 2 )
     
+    def setbind(self):
+        self.parent.bind('<Control-o>', self.lienvideobind)
+        self.parent.bind('<Control-q>', exit)
+        #self.parent.bind('<Control->', )
+
+    def lienvideobind(self,event):
+        self.controller.afficher()
+
+
     def lienvideo(self):
         self.controller.afficher()
 
@@ -126,3 +136,11 @@ class View(tk.Frame):
             canva.create_line(x1, y1, x2, y1, width= 2, fill='purple', tags='scale')
             canva.unbind('<Button-3>')
             return distancex
+
+    def createorigin(self,canva):
+        (x,y) = self.controller.origindessin
+        canva.create_line(x-10, y, x+10, y, width= 2, fill='purple', tags='scale')
+        canva.create_line(x, y-10, x, y+10, width= 2, fill='purple', tags='scale')
+
+    def createpoint(self, canva, x, y):
+        canva.create_oval(x, y, x, y, width=5, fill="red")
