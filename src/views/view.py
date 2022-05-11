@@ -1,6 +1,6 @@
 from fileinput import close
 import tkinter as tk
-from turtle import title
+from turtle import title, width
 from typing import Text
 import PIL.Image, PIL.ImageTk
 from PIL import Image,ImageTk
@@ -25,7 +25,7 @@ class View(tk.Frame):
 
     def setmenu(self, parent):
         self.controller = None
-        parent.geometry('1400x700+200+100')
+        parent.geometry('1400x700+100+50')
         bandeau = Frame(parent, borderwidth = 2, relief = RIDGE )
         bandeau.grid(row = 0, column = 0)
 
@@ -61,23 +61,23 @@ class View(tk.Frame):
         Boustart.grid(row = 0, pady = 10, column = 2)
         Boupause = Button(ZoneOptions,text = 'Pause', command= self.linkpause)
         Boupause.grid(row = 0, pady = 10, column = 3)
-        BouimageS = Button(ZoneOptions,text = '>>|', command= self.linknextimage)
-        BouimageS.grid(row = 0, pady = 10, column = 4)
-        BouimageP = Button(ZoneOptions,text = '|<<', command= 0 )
-        BouimageP.grid(row = 0, pady = 10, column = 1)
-        BouimageF = Button(ZoneOptions,text = '|<', command= self.linkreturnfirstimage)
-        BouimageF.grid(row = 0, pady = 10, column = 0)
-        BouimageL = Button(ZoneOptions,text = '>|', command= 0 )
-        BouimageL.grid(row = 0, pady = 10, column = 5)
+        BouimageSuivante = Button(ZoneOptions,text = '>>|', command= self.linknextimage)
+        BouimageSuivante.grid(row = 0, pady = 10, column = 4)
+        BouimagePrecedante = Button(ZoneOptions,text = '|<<', command= 0 )
+        BouimagePrecedante.grid(row = 0, pady = 10, column = 1)
+        BouimageFirst = Button(ZoneOptions,text = '|<', command= self.linkreturnfirstimage)
+        BouimageFirst.grid(row = 0, pady = 10, column = 0)
+        BouimageLast = Button(ZoneOptions,text = '>|', command= 0)
+        BouimageLast.grid(row = 0, pady = 10, column = 5)
 
         ZonePointage = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Pointage', labelanchor = 'n', width = 200, height = 100)
         ZonePointage.grid(row = 0,pady = 5, column = 0)
         self.Bourepere = Button(ZonePointage,text = '+',activebackground= "yellow", command= self.linkrepere )
         self.Bourepere.grid(row = 0, pady = 10, column = 0)
-        BouPointer = Button(ZonePointage,text = 'x', command= self.linkpointage )
-        BouPointer.grid(row = 0, pady = 10, column = 1)
-        Bouechelle = Button(ZonePointage, text = 'scale', command = self.linkechelle)
-        Bouechelle.grid(row = 0, pady = 10, column = 2 )
+        self.BouPointer = Button(ZonePointage,text = 'x', command= self.linkpointage )
+        self.BouPointer.grid(row = 0, pady = 10, column = 1)
+        self.Bouechelle = Button(ZonePointage, text = 'scale', command = self.linkechelle)
+        self.Bouechelle.grid(row = 0, pady = 10, column = 2 )
     
     def setbind(self):
         self.parent.bind('<Control-o>', self.lienvideobind)
@@ -106,11 +106,26 @@ class View(tk.Frame):
     def linkrepere(self):
         self.controller.repere()
     
-    def changecolorred(self):
-        self.Bourepere.configure( fg="red")
+    def changecolorred(self, bouton):
+        if bouton == "repere":
+            self.Bourepere.configure( fg="red")
+        elif bouton == "pointeur":
+            self.BouPointer.configure( fg="red")
+        elif bouton == "echelle":
+            self.Bouechelle.configure( fg="red")
 
-    def changecolorblack(self):
-        self.Bourepere.configure( fg="black")
+
+    def changecolorblack(self, bouton):
+        if bouton == "tout":
+            self.Bourepere.configure( fg="black")
+            self.Bouechelle.configure( fg="black")
+            self.BouPointer.configure( fg="black")
+        elif bouton == "repere":
+            self.Bourepere.configure( fg="black")
+        elif bouton == "pointeur":
+            self.BouPointer.configure( fg="black")
+        elif bouton == "echelle":
+            self.Bouechelle.configure( fg="black")
 
     def linkpointage(self):
         self.controller.pointage()
@@ -131,16 +146,27 @@ class View(tk.Frame):
         if distancex < distancey:
             canva.create_line(x1, y1, x1, y2, width= 2, fill='purple', tags='scale')
             canva.unbind('<Button-3>')
-            return distancey
+            self.controller.scalesize = distancey
         if distancex > distancey:
             canva.create_line(x1, y1, x2, y1, width= 2, fill='purple', tags='scale')
             canva.unbind('<Button-3>')
-            return distancex
+            self.controller.scalesize = distancex
 
     def createorigin(self,canva):
         (x,y) = self.controller.origindessin
-        canva.create_line(x-10, y, x+10, y, width= 2, fill='purple', tags='scale')
-        canva.create_line(x, y-10, x, y+10, width= 2, fill='purple', tags='scale')
+        canva.create_line(x-10, y, x+10, y, width= 2, fill='red', tags='origin')
+        canva.create_line(x, y-10, x, y+10, width= 2, fill='red', tags='origin')
 
     def createpoint(self, canva, x, y):
         canva.create_oval(x, y, x, y, width=5, fill="red")
+
+    def resizewindow(self, vwidth, vheight):
+        if vwidth < 580:
+            w = 600
+        if vheight < 500:
+            h = 600
+        if vwidth >= 280:
+            w= vwidth + 20
+        if vheight >= 500:
+            h = 100 + vheight
+        self.parent.geometry( str(int(w)) + 'x' + str(int(h)) +'+100+50')

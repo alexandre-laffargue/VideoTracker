@@ -23,11 +23,15 @@ class Controller:
         self.scale2y = -1
         self.scalesize = -1
         self.scalerealsize = -1
+        self.scaleplaced = False
 
 
     def afficher(self):
         self.video.openfile()
-        self.video.next_frame()
+        if self.video.capopen:
+            self.view.resizewindow(self.video.canwidth, self.video.canheight)
+            self.video.next_frame()
+        
 
     def lecture(self):
         if self.video.capopen:
@@ -54,29 +58,48 @@ class Controller:
 
     def repere(self):
         if self.video.capopen:
-            self.view.changecolorred()
-            self.takerepere()
+            self.takingpoint = False
+            self.takingscale = False
+            self.view.changecolorblack("tout")
+            self.view.changecolorred("repere")
+            if self.takingrepere:
+                self.takingrepere = False
+                self.view.changecolorblack("repere")
+            else:
+                self.canvas.bind('<Button-1>', self.takecoord)
+                self.takingrepere = True
 
     def pointage(self):
         if self.video.capopen:
-            self.view.changecolorblack()
+            self.takingrepere = False
+            self.takingscale = False
+            self.view.changecolorblack("tout")
+            self.view.changecolorred("pointeur")
             if self.takingpoint:
                 self.takingpoint = False
+                self.view.changecolorblack("pointeur")
             else:
                 self.canvas.bind('<Button-1>', self.takecoord)
                 self.takingpoint = True
 
     def echelle(self):
         if self.video.capopen:
-            self.view.changecolorblack()
-            self.takescale()
-
-    def takerepere(self):
-        if self.takingrepere:
+            self.takingpoint = False
             self.takingrepere = False
-        else:
-            self.canvas.bind('<Button-1>', self.takecoord)
-            self.takingrepere = True
+            self.view.changecolorblack("tout")
+            self.view.changecolorred("echelle")
+            if self.scaleplaced:
+                self.view.changecolorblack("echelle")
+                showinfo('Info', 'échelle déjà placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
+            else:
+                if self.takingscale:
+                    self.takingscale = False
+                    self.view.changecolorblack("echelle")
+                else:
+                    self.takingscale = True
+                    self.canvas.bind('<Button-3>', self.takecoord)
+                    print("eoeooe")
+
 
     def takecoord(self, event):
         xrep,yrep = self.origin
@@ -88,6 +111,8 @@ class Controller:
             self.origindessin=(x,y)
             self.takingrepere = False
             self.canvas.unbind('<Button-1>')
+            self.view.changecolorblack('repere')
+            self.canvas.delete('origin')
             self.view.createorigin(self.canvas)
             showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", "+ str(yi) + ")." )
         if self.takingpoint:
@@ -104,31 +129,21 @@ class Controller:
                 self.scale2x = x
                 self.scale2y = y
                 print("deuxieme point placé")
-                self.scalesize = self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
+                self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
                 self.takingscale = False
+                self.scaleplaced = True
+                self.view.changecolorblack('echelle')
                 self.scalerealsize = int(simpledialog.askstring(title='Echelle', prompt="Veuiller entrer la distance réelle de l'échelle en cm :"))
                 showinfo('Info', 'échelle placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
 
-
-
-    def takescale(self):
-        if self.scale2x != -1:
-            showinfo('Info', 'échelle déjà placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
-        else:
-            if self.takingscale:
-                self.takingscale = False
-            else:
-                self.takingscale = True
-                self.canvas.bind('<Button-3>', self.takecoord)
-                print("eoeooe")
-
-
     def resetscale(self):
-        self.canvas.delete('scale')
-        self.scale1x = -1
-        self.scale1y = -1
-        self.scale2x = -1
-        self.scale2y = -1
+        if self.scaleplaced:
+            self.canvas.delete('scale')
+            self.scaleplaced = False
+            self.scale1x = -1
+            self.scale1y = -1
+            self.scale2x = -1
+            self.scale2y = -1
 
     def trace(self):
         self.view.createorigin(self.canvas)

@@ -1,10 +1,8 @@
 from tkinter import *
-from tkinter import messagebox
-from turtle import title
 import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter.filedialog import askopenfilename
-import time
+
 from tkinter.messagebox import *
 
 class Video:
