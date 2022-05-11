@@ -19,10 +19,9 @@ class Video:
         self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
         self.filename = None
-        self.repere = ( 0, 0)
         self.canwidth = None
         self.canheight = None
-        self.takingrepere = False
+        self.frame = 0
 
 
     def openfile(self):
@@ -36,12 +35,7 @@ class Video:
         self.canwidth = video_width
         self.canheight = video_height
         self.capopen = True
-        self.canvas.bind('<Button-1>', self.takecoord)
 
-    def get_first_frame(self):   
-        if self.cap.isOpened():
-            ret, frame = self.cap.read()
-            return (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
     def get_frame(self):   
         try:
@@ -66,6 +60,7 @@ class Video:
             if ret:
                 self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+                self.frame += 1
             if not self.pause:
                 self.canvas.after(self.delay, self.play_video)
         except:
@@ -76,28 +71,11 @@ class Video:
         if ret and self.pause:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.frame += 1
 
     def returnfirstframe(self):
         self.cap = cv2.VideoCapture(self.filename)
-
-    def takecoord(self, event):
-        xrep,yrep = self.repere
-        x = int(self.canvas.winfo_pointerx() - self.canvas.winfo_rootx() )
-        y = int(self.canheight - (self.canvas.winfo_pointery() - self.canvas.winfo_rooty() ))
-        print(x-xrep,y-yrep)
-        if self.takingrepere:
-            self.repere= (x,y)
-            self.takingrepere = False
-            showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", "+ str(y) + ")." )
-
-
-    def takerepere(self):
-        if self.takingrepere:
-            self.takingrepere = False
-        else:
-            self.takingrepere = True
-
-
+        self.frame = 0
 
 
     def __del__(self):

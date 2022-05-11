@@ -1,15 +1,17 @@
+from fileinput import close
 import tkinter as tk
+from turtle import title
+from typing import Text
 import PIL.Image, PIL.ImageTk
 from PIL import Image,ImageTk
-from tkinter import  CENTER, RIDGE, Frame, Menu, ttk, LabelFrame, Button, Canvas
-
+from tkinter import  CENTER, RIDGE, Entry, Frame, Menu, StringVar, Toplevel, ttk, LabelFrame, Button, Canvas
+from tkinter.messagebox import *
  
 class View(tk.Frame):
 
     def __init__(self, parent):
         super().__init__(parent)
         self.controller = None
-        self.canvas = None
         self.parent = parent
 
         self.setmenu(parent)
@@ -30,8 +32,10 @@ class View(tk.Frame):
         parent['menu'] = menuBar
 
         Filesmenu = Menu(menuBar,tearoff=0)
+        Editmenu = Menu(menuBar,tearoff=0)
         Viewmenu = Menu(menuBar,tearoff=0)
         menuBar.add_cascade(label='Files', menu=Filesmenu)
+        menuBar.add_cascade(label='Edit', menu=Editmenu)
         menuBar.add_cascade(label='View', menu=Viewmenu)
 
         Filesmenu.add_command(label='Charger un fichier vidéo', command=self.lienvideo)
@@ -41,6 +45,9 @@ class View(tk.Frame):
         Filesmenu.add_command(label='Save', command=0)
         Filesmenu.add_command(label='Exporter (csv)', command=0)
         
+        Editmenu.add_command(label='SetScale', command= self.linkechelle)
+        Editmenu.add_command(label='ResetScale', command= self.linkresetechelle)
+
         Viewmenu.add_command(label='Affichage graphique', command=0)
         
     def setbouton(self, parent):
@@ -64,10 +71,12 @@ class View(tk.Frame):
 
         ZonePointage = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Pointage', labelanchor = 'n', width = 200, height = 100)
         ZonePointage.grid(row = 0,pady = 5, column = 0)
-        self.Bourepere = Button(ZonePointage,text = '+', command= self.linkrepere )
+        self.Bourepere = Button(ZonePointage,text = '+',activebackground= "yellow", command= self.linkrepere )
         self.Bourepere.grid(row = 0, pady = 10, column = 0)
-        BouPointer = Button(ZonePointage,text = 'x', command= 0 )
+        BouPointer = Button(ZonePointage,text = 'x', command= self.linkpointage )
         BouPointer.grid(row = 0, pady = 10, column = 1)
+        Bouechelle = Button(ZonePointage, text = 'scale', command = self.linkechelle)
+        Bouechelle.grid(row = 0, pady = 10, column = 2 )
     
     def lienvideo(self):
         self.controller.afficher()
@@ -86,10 +95,60 @@ class View(tk.Frame):
 
     def linkrepere(self):
         self.controller.repere()
-        print('a')
     
     def changecolorred(self):
         self.Bourepere.configure( fg="red")
 
     def changecolorblack(self):
         self.Bourepere.configure( fg="black")
+
+    def linkpointage(self):
+        self.controller.pointage()
+    
+    def linkechelle(self):
+        self.controller.echelle()
+        
+    def linkresetechelle(self):
+        self.controller.resetscale()
+
+    def createscale(self, x1, y1, x2, y2, canva):
+        distancex = x1 - x2
+        distancey = y1 - y2
+        if distancex < 0:
+            distancex = -distancex
+        if distancey < 0:
+            distancey = -distancey
+        if distancex < distancey:
+            canva.create_line(x1, y1, x1, y2, width= 2, fill='purple', tags='scale')
+            canva.unbind('<Button-3>')
+            return distancey
+        if distancex > distancey:
+            canva.create_line(x1, y1, x2, y1, width= 2, fill='purple', tags='scale')
+            canva.unbind('<Button-3>')
+            return distancex
+
+    def getvalue5(self, saisi):
+        saisi = Entry(self.parent, width=10)
+        saisi.grid(row=0, sticky='ew')
+        return saisi
+
+
+
+    def getvalue(self, value):
+        fen = Toplevel()
+        fen.geometry('450x80')
+        fen.title("Veuiller entrer la distance réelle de l'échelle :")
+        def returnentree(entree):
+            print("jesuisfkdpsfd")
+            fen.destroy
+            self.controller.scalerealsize = int(entree.get())
+        Zone = LabelFrame(fen , borderwidth = 2, text = 'échelle en cm', labelanchor = 'n', width = 200, height = 100)
+        Zone.grid(row = 0,pady = 5, column = 0)
+        value = StringVar() 
+        value.set(0)
+        entree = Entry(Zone, textvariable=value, width=40, )
+        entree.grid(row = 0, pady = 20, column = 0)
+        bouton = Button(fen, text="Valider", command= returnentree(entree))
+        bouton.grid(row = 0, pady = 20, column = 1)
+        
+        

@@ -2,6 +2,7 @@ import tkinter as tk
 from controllers.Controller import Controller
 from models.Video import Video
 from views.view import View
+from models.Point import Point
 
 class Application(tk.Tk):
 
@@ -11,10 +12,11 @@ class Application(tk.Tk):
         self.title('Video Tracker')
         # create a video model
         video = Video(self)
+    
         # create a view and place it on the root window
         view = View(self)
         # create a controller
-        controller = Controller(video, view)
+        controller = Controller(video, view, Point)
 
         # set the controller to view
         view.setController(controller)
