@@ -126,29 +126,3 @@ class View(tk.Frame):
             canva.create_line(x1, y1, x2, y1, width= 2, fill='purple', tags='scale')
             canva.unbind('<Button-3>')
             return distancex
-
-    def getvalue5(self, saisi):
-        saisi = Entry(self.parent, width=10)
-        saisi.grid(row=0, sticky='ew')
-        return saisi
-
-
-
-    def getvalue(self, value):
-        fen = Toplevel()
-        fen.geometry('450x80')
-        fen.title("Veuiller entrer la distance réelle de l'échelle :")
-        def returnentree(entree):
-            print("jesuisfkdpsfd")
-            fen.destroy
-            self.controller.scalerealsize = int(entree.get())
-        Zone = LabelFrame(fen , borderwidth = 2, text = 'échelle en cm', labelanchor = 'n', width = 200, height = 100)
-        Zone.grid(row = 0,pady = 5, column = 0)
-        value = StringVar() 
-        value.set(0)
-        entree = Entry(Zone, textvariable=value, width=40, )
-        entree.grid(row = 0, pady = 20, column = 0)
-        bouton = Button(fen, text="Valider", command= returnentree(entree))
-        bouton.grid(row = 0, pady = 20, column = 1)
-        
-        

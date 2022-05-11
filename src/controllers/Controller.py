@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.messagebox import *
-
+from tkinter import simpledialog;
 
 class Controller:
 
@@ -118,9 +118,9 @@ class Controller:
                 print("deuxieme point placé")
                 self.scalesize = self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
                 self.takingscale = False
-                print(self.scalesize)
-                self.view.getvalue(self.scalerealsize)
-                print(self.scalerealsize)
+                self.scalerealsize = int(simpledialog.askstring(title='Echelle', prompt="Veuiller entrer la distance réelle de l'échelle en cm :"))
+                showinfo('Info', 'échelle placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
+
 
     def resetscale(self):
         self.canvas.delete('scale')
