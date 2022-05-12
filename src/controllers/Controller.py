@@ -5,12 +5,13 @@ from tkinter import simpledialog;
 
 class Controller:
 
-    def __init__(self, video, view, point):
+    def __init__(self, video, view, point, graph, tab):
         
         self.video = video
         self.view = view
         self.point = point
-
+        self.graph = graph
+        self.tab = tab
         self.canvas = self.video.canvas
         self.origin = (0, 0)
         self.origindessin = (0, 0)
@@ -162,14 +163,21 @@ class Controller:
             self.scale2x = -1
             self.scale2y = -1
 
+    def resetpointage(self):
+        self.tableau = []
+
     def trace(self):
         self.view.createorigin(self.canvas)
         self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
-        for i in range(len(self.tableau)):
-            frame = self.tableau[i].getT()
-            self.canvas.focus('point'+str(frame))
         for i in range(len(self.tableau)):
             x = self.tableau[i].getX() + self.xrep
             y = -(self.tableau[i].getY() + self.yrep) + int(self.video.canheight)
             self.view.createpoint(self.canvas, x, y)
         
+    def creategraph(self):
+        print("here")
+        self.graph(self.view.parent)
+
+    def createtableau(self):
+        print("tableau")
+        self.tab(self.view.parent, self.tableau)

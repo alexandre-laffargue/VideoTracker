@@ -46,10 +46,14 @@ class View(tk.Frame):
         Filesmenu.add_command(label='Save', command=0)
         Filesmenu.add_command(label='Exporter (csv)', command=0)
         
+        Editmenu.add_command(label='Afficher Valeurs', command= self.linktableau)
         Editmenu.add_command(label='SetScale', command= self.linkechelle)
         Editmenu.add_command(label='ResetScale', command= self.linkresetechelle)
+        Editmenu.add_command(label='ResetPointage', command= self.linkresetpointage)
 
-        Viewmenu.add_command(label='Affichage graphique', command=0)
+        Viewmenu.add_command(label='Affichage graphique y(x)', command= self.linkgraph)
+        Viewmenu.add_command(label='Affichage graphique x(t)', command=0)
+        Viewmenu.add_command(label='Affichage graphique y(t)', command=0)
         
     def setbouton(self, parent):
         ZoneBoutons = Frame(parent)
@@ -103,9 +107,15 @@ class View(tk.Frame):
     def linkreturnfirstimage(self):
         self.controller.returnfirstimage()
 
+    def linkgraph(self):
+        self.controller.creategraph()
+
+    def linktableau(self):
+        self.controller.createtableau()
+
     def linkrepere(self):
         self.controller.repere()
-    
+
     def changecolorred(self, bouton):
         if bouton == "repere":
             self.Bourepere.configure( fg="red")
@@ -113,7 +123,6 @@ class View(tk.Frame):
             self.BouPointer.configure( fg="red")
         elif bouton == "echelle":
             self.Bouechelle.configure( fg="red")
-
 
     def changecolorblack(self, bouton):
         if bouton == "tout":
@@ -135,6 +144,9 @@ class View(tk.Frame):
         
     def linkresetechelle(self):
         self.controller.resetscale()
+    
+    def linkresetpointage(self):
+        self.controller.resetpointage()
 
     def createscale(self, x1, y1, x2, y2, canva):
         distancex = x1 - x2
