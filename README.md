@@ -8,4 +8,5 @@ In this project, we'll do a logiciel for videotracking
 
 Passage à l'oral à 14h.
 
-![image.png](./image.png)
+![image-2.png](./image-2.png)
+
