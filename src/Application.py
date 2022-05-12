@@ -5,6 +5,7 @@ from views.view import View
 from models.Point import Point
 from models.Graph import Graph
 from models.Tableau import Tableau
+from models.FileRepo import FileRepo
 
 class Application(tk.Tk):
 
@@ -18,7 +19,7 @@ class Application(tk.Tk):
         # create a view and place it on the root window
         view = View(self)
         # create a controller
-        controller = Controller(video, view, Point, Graph, Tableau)
+        controller = Controller(video, view, Point, Graph, Tableau, FileRepo)
 
         # set the controller to view
         view.setController(controller)

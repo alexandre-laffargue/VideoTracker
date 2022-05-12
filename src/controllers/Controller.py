@@ -1,17 +1,20 @@
 import tkinter as tk
 from tkinter import *
+from tkinter.filedialog import asksaveasfilename
 from tkinter.messagebox import *
 from tkinter import simpledialog;
 
 class Controller:
 
-    def __init__(self, video, view, point, graph, tab):
+    def __init__(self, video, view, point, graph, tab, filerepo):
         
         self.video = video
         self.view = view
         self.point = point
         self.graph = graph
         self.tab = tab
+        self.filerepo = filerepo
+
         self.canvas = self.video.canvas
         self.origin = (0, 0)
         self.origindessin = (0, 0)
@@ -192,3 +195,8 @@ class Controller:
         coefechelle = (self.scalerealsize/self.scalesize)
         print(coefechelle)
         self.tab(self.view.parent, self.tableau, coefechelle)
+
+    def exporter(self):
+        coefechelle = (self.scalerealsize/self.scalesize)
+        filename = asksaveasfilename(title = "Enregistrer sous ..." )
+        self.filerepo(self.tableau, filename, coefechelle)

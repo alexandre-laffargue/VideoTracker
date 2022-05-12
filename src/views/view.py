@@ -44,7 +44,7 @@ class View(tk.Frame):
         Filesmenu.add_command(label='Quitter', command=exit)
         Filesmenu.add_separator()
         Filesmenu.add_command(label='Save', command=0)
-        Filesmenu.add_command(label='Exporter (csv)', command=0)
+        Filesmenu.add_command(label='Exporter (csv)', command= self.linkexporter)
         
         Editmenu.add_command(label='Afficher Valeurs', command= self.linktableau)
         Editmenu.add_command(label='SetScale', command= self.linkechelle)
@@ -190,3 +190,6 @@ class View(tk.Frame):
         if vheight >= 500:
             h = 90 + vheight
         self.parent.geometry( str(int(w)) + 'x' + str(int(h)))
+
+    def linkexporter(self):
+        self.controller.exporter()

@@ -19,8 +19,8 @@ class Graph:
         
         for i in range(len(self.data)):
             self.t.append(self.data[i].getT())
-            self.x.append(self.data[i].getX())
-            self.y.append(self.data[i].getY())
+            self.x.append(self.data[i].getX()*self.coef)
+            self.y.append(self.data[i].getY()*self.coef)
 
     def creategraph(self):
         if self.graphique == 'y_t':

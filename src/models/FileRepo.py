@@ -1,16 +1,17 @@
 import string
-from Point import Point
 import os
 
 class FileRepo:
 
-    def __init__(self,filename) -> None:
+    def __init__(self, data, filename, coef) -> None:
         self.filename = filename
+        self.data = data
+        self.coef = coef
+        self.export2CSV(self.data, self.filename)
         
     
     def export2CSV(self, data:list, filename:str):
-
-
+        print('dans le export')
         csv = self.TransformData2CSV(data)
         file = open( filename + ".csv", "w")
         try:
@@ -23,7 +24,7 @@ class FileRepo:
 
         csv = ""
         for i in data:
-            csv += str(i.t) + ";" + str(i.x) + ";" + str(i.y) + "\n"
+            csv += str(i.getT()) + ";" + str(i.getX()*self.coef) + ";" + str(i.getY()*self.coef) + "\n"
         return csv
 
 '''
