@@ -24,6 +24,7 @@ class Controller:
         self.scalesize = -1
         self.scalerealsize = -1
         self.scaleplaced = False
+        self.tableau = []
 
 
     def afficher(self):
@@ -101,7 +102,7 @@ class Controller:
 
 
     def takecoord(self, event):
-        xrep,yrep = self.origin
+        self.xrep,self.yrep = self.origin
         x = int(self.canvas.winfo_pointerx() - self.canvas.winfo_rootx() )
         yi =  -( int(self.canvas.winfo_pointery()) - int(self.canvas.winfo_rooty()) - int(self.video.canheight))  #ordonné inversé du bas vers le haut
         y = int(self.canvas.winfo_pointery() - self.canvas.winfo_rooty() )
@@ -115,7 +116,20 @@ class Controller:
             self.view.createorigin(self.canvas)
             showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", " + str(yi) + ")." )
         if self.takingpoint:
-            print("frame =",self.video.frame,"x=",x-xrep,"y=",yi-yrep)
+            print("frame =",self.video.frame,"x=",x-self.xrep,"y=",yi-self.yrep)
+            
+            pt = self.point(self.video.frame, x-self.xrep, yi-self.yrep)
+            print('(',pt.getT(), pt.getX(), pt.getY(),')')
+            i = self.searchpoint(self.video.frame)
+            if i == -1:
+                self.tableau.append(pt)
+                print('dans le tableau')
+                print(self.tableau[0].getT(), self.tableau[0].getX(),self.tableau[0].getY() )
+            else:
+                self.tableau[i].setX(x-self.xrep)
+                self.tableau[i].setY(yi-self.yrep)
+                print('dans le tableau')
+                print(self.tableau[i].getT(), self.tableau[i].getX(),self.tableau[i].getY() )
             self.video.next_frame()
             self.view.createpoint(self.canvas, x, y)
             self.trace()
@@ -133,6 +147,12 @@ class Controller:
                 self.scalerealsize = int(simpledialog.askstring(title='Echelle', prompt="Veuiller entrer la distance réelle de l'échelle en cm :"))
                 showinfo('Info', 'échelle placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
 
+    def searchpoint(self,frame):
+        for i in range(len(self.tableau)):
+            if self.tableau[i].getT() == frame:
+                return i
+        return -1
+
     def resetscale(self):
         if self.scaleplaced:
             self.canvas.delete('scale')
@@ -145,3 +165,11 @@ class Controller:
     def trace(self):
         self.view.createorigin(self.canvas)
         self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
+        for i in range(len(self.tableau)):
+            frame = self.tableau[i].getT()
+            self.canvas.focus('point'+str(frame))
+        for i in range(len(self.tableau)):
+            x = self.tableau[i].getX() + self.xrep
+            y = -(self.tableau[i].getY() + self.yrep) + int(self.video.canheight)
+            self.view.createpoint(self.canvas, x, y)
+        

@@ -158,7 +158,7 @@ class View(tk.Frame):
         canva.create_line(x, y-10, x, y+10, width= 2, fill='red', tags='origin')
 
     def createpoint(self, canva, x, y):
-        canva.create_oval(x, y, x, y, width=5, fill="red")
+        canva.create_oval(x, y, x, y, width=5, fill="red", tags='point'+str(self.controller.video.frame))
 
     def resizewindow(self, vwidth, vheight):
         if vwidth < 580:
