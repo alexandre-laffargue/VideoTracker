@@ -98,13 +98,12 @@ class Controller:
                 else:
                     self.takingscale = True
                     self.canvas.bind('<Button-3>', self.takecoord)
-                    print("eoeooe")
 
 
     def takecoord(self, event):
         xrep,yrep = self.origin
         x = int(self.canvas.winfo_pointerx() - self.canvas.winfo_rootx() )
-        yi = int(self.video.canheight) - int(self.canvas.winfo_pointery()) - int(self.canvas.winfo_rooty())  #ordonné inversé du bas vers le haut
+        yi =  -( int(self.canvas.winfo_pointery()) - int(self.canvas.winfo_rooty()) - int(self.video.canheight))  #ordonné inversé du bas vers le haut
         y = int(self.canvas.winfo_pointery() - self.canvas.winfo_rooty() )
         if self.takingrepere:
             self.origin= (x,yi)
@@ -114,9 +113,9 @@ class Controller:
             self.view.changecolorblack('repere')
             self.canvas.delete('origin')
             self.view.createorigin(self.canvas)
-            showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", "+ str(yi) + ")." )
+            showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", " + str(yi) + ")." )
         if self.takingpoint:
-            print(self.video.frame,x-xrep,yi-yrep)
+            print("frame =",self.video.frame,"x=",x-xrep,"y=",yi-yrep)
             self.video.next_frame()
             self.view.createpoint(self.canvas, x, y)
             self.trace()
@@ -124,11 +123,9 @@ class Controller:
             if self.scale1x == -1:
                 self.scale1x = x
                 self.scale1y = y
-                print("premier point placé")
             elif self.scale1x != -1 and self.scale2x == -1:
                 self.scale2x = x
                 self.scale2y = y
-                print("deuxieme point placé")
                 self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
                 self.takingscale = False
                 self.scaleplaced = True

@@ -13,7 +13,7 @@ class Video:
         self.delay = 15 #ms
         self.pause = True
         ZoneVideo = Frame(parent, borderwidth = 2, relief = RIDGE)
-        ZoneVideo.grid(row = 1, column = 0)
+        ZoneVideo.grid(row = 1, column = 0, padx=5)
         self.canvas = Canvas(ZoneVideo, bg = 'gray', width = 840, height = 450)
         self.canvas.pack()
         self.filename = None

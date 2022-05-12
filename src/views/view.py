@@ -168,5 +168,5 @@ class View(tk.Frame):
         if vwidth >= 280:
             w= vwidth + 20
         if vheight >= 500:
-            h = 100 + vheight
-        self.parent.geometry( str(int(w)) + 'x' + str(int(h)) +'+100+50')
+            h = 90 + vheight
+        self.parent.geometry( str(int(w)) + 'x' + str(int(h)))
