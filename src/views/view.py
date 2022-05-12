@@ -51,9 +51,9 @@ class View(tk.Frame):
         Editmenu.add_command(label='ResetScale', command= self.linkresetechelle)
         Editmenu.add_command(label='ResetPointage', command= self.linkresetpointage)
 
-        Viewmenu.add_command(label='Affichage graphique y(x)', command= self.linkgraph)
-        Viewmenu.add_command(label='Affichage graphique x(t)', command=0)
-        Viewmenu.add_command(label='Affichage graphique y(t)', command=0)
+        Viewmenu.add_command(label='Affichage graphique y(x)', command= self.linkgraphy_x)
+        Viewmenu.add_command(label='Affichage graphique x(t)', command= self.linkgraphx_t)
+        Viewmenu.add_command(label='Affichage graphique y(t)', command= self.linkgraphy_t)
         
     def setbouton(self, parent):
         ZoneBoutons = Frame(parent)
@@ -86,11 +86,13 @@ class View(tk.Frame):
     def setbind(self):
         self.parent.bind('<Control-o>', self.lienvideobind)
         self.parent.bind('<Control-q>', exit)
-        #self.parent.bind('<Control->', )
+        self.parent.bind('<Escape>', self.linkpointageoff )
 
     def lienvideobind(self,event):
         self.controller.afficher()
 
+    def linkpointageoff(self, event):
+        self.controller.putpointageoff()
 
     def lienvideo(self):
         self.controller.afficher()
@@ -107,8 +109,14 @@ class View(tk.Frame):
     def linkreturnfirstimage(self):
         self.controller.returnfirstimage()
 
-    def linkgraph(self):
-        self.controller.creategraph()
+    def linkgraphy_x(self):
+        self.controller.creategraph('y_x')
+
+    def linkgraphx_t(self):
+        self.controller.creategraph('x_t')
+
+    def linkgraphy_t(self):
+        self.controller.creategraph('y_t')
 
     def linktableau(self):
         self.controller.createtableau()

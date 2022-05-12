@@ -65,6 +65,7 @@ class Controller:
             self.view.changecolorblack("tout")
             self.view.changecolorred("repere")
             if self.takingrepere:
+                self.canvas.unbind('<Button-1>')
                 self.takingrepere = False
                 self.view.changecolorblack("repere")
             else:
@@ -78,11 +79,18 @@ class Controller:
             self.view.changecolorblack("tout")
             self.view.changecolorred("pointeur")
             if self.takingpoint:
+                self.canvas.unbind('<Button-1>')
                 self.takingpoint = False
                 self.view.changecolorblack("pointeur")
             else:
                 self.canvas.bind('<Button-1>', self.takecoord)
                 self.takingpoint = True
+
+    def putpointageoff(self):
+        if self.takingpoint:
+            self.view.changecolorblack("pointeur")
+            self.takingpoint = False
+            self.canvas.unbind('<Button-1>')
 
     def echelle(self):
         if self.video.capopen:
@@ -95,6 +103,7 @@ class Controller:
                 showinfo('Info', 'échelle déjà placé : ' + str(self.scalesize) + 'pixels = ' + str(self.scalerealsize) + 'cm.' )
             else:
                 if self.takingscale:
+                    self.canvas.unbind('<Button-3>')
                     self.takingscale = False
                     self.view.changecolorblack("echelle")
                 else:
@@ -118,20 +127,18 @@ class Controller:
             self.view.createorigin(self.canvas)
             showinfo('Info', 'Repère placé au coordonnées (' + str(x) + ", " + str(yi) + ")." )
         if self.takingpoint:
-            print("frame =",self.video.frame,"x=",x-self.xrep,"y=",yi-self.yrep)
+            #print("frame =",self.video.frame,"x=",x-self.xrep,"y=",yi-self.yrep)
             
             pt = self.point(self.video.frame, x-self.xrep, yi-self.yrep)
-            print('(',pt.getT(), pt.getX(), pt.getY(),')')
+            #print('(',pt.getT(), pt.getX(), pt.getY(),')')
             i = self.searchpoint(self.video.frame)
             if i == -1:
                 self.tableau.append(pt)
-                print('dans le tableau')
-                print(self.tableau[0].getT(), self.tableau[0].getX(),self.tableau[0].getY() )
+                #print(self.tableau[0].getT(), self.tableau[0].getX(),self.tableau[0].getY() )
             else:
                 self.tableau[i].setX(x-self.xrep)
                 self.tableau[i].setY(yi-self.yrep)
-                print('dans le tableau')
-                print(self.tableau[i].getT(), self.tableau[i].getX(),self.tableau[i].getY() )
+                #print(self.tableau[i].getT(), self.tableau[i].getX(),self.tableau[i].getY() )
             self.video.next_frame()
             self.view.createpoint(self.canvas, x, y)
             self.trace()
@@ -143,6 +150,7 @@ class Controller:
                 self.scale2x = x
                 self.scale2y = y
                 self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
+                self.canvas.unbind('<Button-3>')
                 self.takingscale = False
                 self.scaleplaced = True
                 self.view.changecolorblack('echelle')
@@ -175,12 +183,12 @@ class Controller:
             y = -(self.tableau[i].getY() + self.yrep) + int(self.video.canheight)
             self.view.createpoint(self.canvas, x, y)
         
-    def creategraph(self):
+    def creategraph(self, graphique):
         print("here")
-        self.graph(self.view.parent)
+        coefechelle = (self.scalerealsize/self.scalesize)
+        self.graph(self.view.parent, self.tableau, coefechelle, graphique)
 
     def createtableau(self):
-        print("tableau")
         coefechelle = (self.scalerealsize/self.scalesize)
         print(coefechelle)
         self.tab(self.view.parent, self.tableau, coefechelle)

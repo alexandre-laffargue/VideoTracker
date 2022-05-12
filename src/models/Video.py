@@ -29,7 +29,7 @@ class Video:
         self.cap = cv2.VideoCapture(self.filename)
         video_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         video_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.config(width = video_width, height = video_height)
+        self.canvas.config(width = int(video_width), height = int(video_height))
         self.canwidth = video_width
         self.canheight = video_height
         self.capopen = True
