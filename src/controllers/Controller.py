@@ -111,6 +111,7 @@ class Controller:
             self.origin= (x,yi)
             self.origindessin=(x,y)
             self.takingrepere = False
+            self.resetpointage()
             self.canvas.unbind('<Button-1>')
             self.view.changecolorblack('repere')
             self.canvas.delete('origin')
@@ -180,4 +181,6 @@ class Controller:
 
     def createtableau(self):
         print("tableau")
-        self.tab(self.view.parent, self.tableau)
+        coefechelle = (self.scalerealsize/self.scalesize)
+        print(coefechelle)
+        self.tab(self.view.parent, self.tableau, coefechelle)

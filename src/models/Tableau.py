@@ -3,14 +3,15 @@ from tkinter.ttk import Treeview
 
 class Tableau:
     
-    def __init__(self, parent, data):
+    def __init__(self, parent, data, coef):
         self.data = data
+        self.coef = coef
         self.tab = Toplevel(parent)
         self.table()
         self.entervalue()
         self.tab.mainloop()
-        
-    
+
+
     def table(self):
         self.tableau = Treeview(self.tab, columns=('temps', 'x', 'y'))
 
@@ -24,4 +25,4 @@ class Tableau:
 
     def entervalue(self):
         for i in range(len(self.data)):
-            self.tableau.insert('', 'end', iid=self.data[i].getT(), values=(self.data[i].getT(), self.data[i].getX(),self.data[i].getY()))
+            self.tableau.insert('', 'end', iid=self.data[i].getT(), values=(self.data[i].getT(), (self.data[i].getX()*self.coef), (self.data[i].getY()*self.coef) ))
