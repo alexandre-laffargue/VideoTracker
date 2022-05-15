@@ -22,6 +22,11 @@ test-Point:
   stage: test
   script :
     - python3 -m unittest -v tests/test_Point.py
+
+test-Graph:
+  stage: test
+  script :
+    - python3 -m unittest -v tests/test_Graph.py
     
 coverage-FileRepo:
   stage: coverage
@@ -37,3 +42,9 @@ coverage-Point:
     - coverage run -m pytest tests/test_Point.py
     - coverage report -m
 
+coverage-Graph:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run -m pytest tests/test_Graph.py
+    - coverage report -m
