@@ -11,6 +11,7 @@ class Test_filerepo(unittest.TestCase):
         self.p3 = Point(3,5,8)
         self.data = [self.p1,self.p2, self.p3]
         self.file = FileRepo(self.data, "filetest", 1)
+        self.file4 = FileRepo(self.data, "filetest", 4)
 
     def tearDown(self):
         pass
@@ -25,6 +26,9 @@ class Test_filerepo(unittest.TestCase):
         self.assertEqual(csv.read() , "0;1;3\n1;4;6\n3;5;8\n")
         csv.close()
 
+    def test_transform2strwithscale(self):
+        csv = self.file4.TransformData2CSV(self.data)
+        self.assertEqual(csv, "0;4;12\n1;16;24\n3;20;32\n")
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
