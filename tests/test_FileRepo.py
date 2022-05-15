@@ -1,10 +1,6 @@
 import unittest
-import sys
-sys.path.append("../src/models")
-from Point import Point
-from FileRepo import FileRepo
-
-
+from src.models.Point import Point
+from src.models.FileRepo import FileRepo
 
 class Test_filerepo(unittest.TestCase):
 
