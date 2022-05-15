@@ -25,11 +25,6 @@ class Test_filerepo(unittest.TestCase):
         self.assertEqual(csv.read() , "0;1;3\n1;4;6\n3;5;8\n")
         csv.close()
 
-    def test_editpoint(self):
-        self.p1.setX(2)
-        self.p1.setY(4)
-        self.assertTrue(self.p1.getX() == 2)
-        self.assertTrue(self.p1.getY() == 4)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
