@@ -1,0 +1,27 @@
+default:
+  tags:
+    - CREMI 
+    - Focal/Fossa
+
+stages:
+  - build
+  - test
+  - coverage
+
+buid-job1:
+  stage: build
+  script :
+    - pip install coverage
+
+test-FileRepo:
+  stage: test
+  script :
+    - python3 -m unittest -v project/tests/test_FileRepo.py
+
+coverage-FileRepo:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run -m pytest project/tests/test_FileRepo.py
+    - coverage report -m
+
