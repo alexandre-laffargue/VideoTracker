@@ -9,11 +9,12 @@ from FileRepo import FileRepo
 class Test_filerepo(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.file = FileRepo("filetest")
+        
         self.p1 = Point(0,1,3)
         self.p2 = Point(1,4,6)
         self.p3 = Point(3,5,8)
         self.data = [self.p1,self.p2, self.p3]
+        self.file = FileRepo(self.data, "filetest", 1)
 
     def tearDown(self):
         pass
