@@ -25,7 +25,7 @@ class View(tk.Frame):
 
     def setmenu(self, parent):
         self.controller = None
-        parent.geometry('1400x700+100+50')
+        parent.geometry('860x700+100+50')
         bandeau = Frame(parent, borderwidth = 2, relief = RIDGE )
         bandeau.grid(row = 0, column = 0)
 
@@ -58,7 +58,7 @@ class View(tk.Frame):
     def setbouton(self, parent):
         ZoneBoutons = Frame(parent)
         ZoneBoutons.grid(row = 0, column = 0)
-        ZoneOptions = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Options', labelanchor = 'n', width = 200, height = 100)
+        ZoneOptions = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Options Vidéo', labelanchor = 'n', width = 200, height = 100)
         ZoneOptions.grid(row = 0, column = 1)
 
         Boustart = Button(ZoneOptions,text = '▶', command=self.lienlecture)
