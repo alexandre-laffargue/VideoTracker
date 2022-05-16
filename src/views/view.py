@@ -39,11 +39,11 @@ class View(tk.Frame):
         menuBar.add_cascade(label='Edit', menu=Editmenu)
         menuBar.add_cascade(label='View', menu=Viewmenu)
 
-        Filesmenu.add_command(label='Charger un fichier vidéo', command=self.lienvideo)
-        Filesmenu.add_command(label='Lire une vidéo', command=self.lienlecture)
-        Filesmenu.add_command(label='Quitter', command=exit)
+        Filesmenu.add_command(label='Charger un fichier vidéo| Ctrl + O', command=self.lienvideo)
+        Filesmenu.add_command(label='Lire une vidéo          |', command=self.lienlecture)
+        Filesmenu.add_command(label='Quitter                 | Ctrl + Q', command=exit)
         Filesmenu.add_separator()
-        Filesmenu.add_command(label='Save', command=0)
+        Filesmenu.add_command(label='Save                    | Ctrl + S', command=self.linksave)
         Filesmenu.add_command(label='Exporter (csv)', command= self.linkexporter)
         
         Editmenu.add_command(label='Afficher Valeurs', command= self.linktableau)
@@ -86,13 +86,18 @@ class View(tk.Frame):
     def setbind(self):
         self.parent.bind('<Control-o>', self.lienvideobind)
         self.parent.bind('<Control-q>', exit)
-        self.parent.bind('<Escape>', self.linkpointageoff )
+        self.parent.bind('<Escape>', self.linkpointageoff)
+        self.parent.bind('<Control-s>', self.linksavebind)
 
     def lienvideobind(self,event):
         self.controller.afficher()
 
     def linkpointageoff(self, event):
         self.controller.putpointageoff()
+
+    def linksavebind(self, event):
+        print("eo")
+        self.controller.save()
 
     def lienvideo(self):
         self.controller.afficher()
@@ -193,3 +198,6 @@ class View(tk.Frame):
 
     def linkexporter(self):
         self.controller.exporter()
+
+    def linksave(self):
+        self.controller.save()

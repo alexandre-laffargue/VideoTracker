@@ -29,6 +29,7 @@ class Controller:
         self.scalerealsize = -1
         self.scaleplaced = False
         self.tableau = []
+        self.filename = "fichiersave"
 
 
     def afficher(self):
@@ -198,5 +199,10 @@ class Controller:
 
     def exporter(self):
         coefechelle = (self.scalerealsize/self.scalesize)
-        filename = asksaveasfilename(title = "Enregistrer sous ..." )
-        self.filerepo(self.tableau, filename, coefechelle)
+        self.filename = asksaveasfilename(title = "Enregistrer sous ..." )
+        self.filerepo(self.tableau, self.filename, coefechelle)
+
+    def save(self):
+        coefechelle = (self.scalerealsize/self.scalesize)
+        print("dans le save")
+        self.filerepo(self.tableau, self.filename, coefechelle)
