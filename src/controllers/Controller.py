@@ -191,7 +191,6 @@ class Controller:
                 self.view.createpoint(self.canvas, x, y)
         
     def creategraph(self, graphique):
-        print("here")
         coefechelle = (self.scalerealsize/self.scalesize)
         self.graph(self.view.parent, self.tableau, coefechelle, graphique)
 
@@ -207,7 +206,6 @@ class Controller:
 
     def save(self):
         coefechelle = (self.scalerealsize/self.scalesize)
-        print("dans le save")
         self.filerepo(self.tableau, self.filename, coefechelle)
 
     def seton_offallpoints(self):

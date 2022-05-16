@@ -98,7 +98,6 @@ class View(tk.Frame):
         self.controller.putpointageoff()
 
     def linksavebind(self, event):
-        print("eo")
         self.controller.save()
 
     def lienvideo(self):

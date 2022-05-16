@@ -11,7 +11,6 @@ class FileRepo:
         
     
     def export2CSV(self, data:list, filename:str):
-        print('dans le export')
         csv = self.TransformData2CSV(data)
         file = open( filename + ".csv", "w")
         try:
