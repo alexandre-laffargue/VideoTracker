@@ -30,6 +30,7 @@ class Controller:
         self.scaleplaced = False
         self.tableau = []
         self.filename = "fichiersave"
+        self.statusallpoint = False
 
 
     def afficher(self):
@@ -95,6 +96,7 @@ class Controller:
             self.view.changecolorblack("pointeur")
             self.takingpoint = False
             self.canvas.unbind('<Button-1>')
+            showinfo('Info', "Pointage à l'arrêt.")
 
     def echelle(self):
         if self.video.capopen:
@@ -182,10 +184,11 @@ class Controller:
     def trace(self):
         self.view.createorigin(self.canvas)
         self.view.createscale(self.scale1x, self.scale1y, self.scale2x, self.scale2y, self.canvas)
-        for i in range(len(self.tableau)):
-            x = self.tableau[i].getX() + self.xrep
-            y = -(self.tableau[i].getY() + self.yrep) + int(self.video.canheight)
-            self.view.createpoint(self.canvas, x, y)
+        if self.statusallpoint:
+            for i in range(len(self.tableau)):
+                x = self.tableau[i].getX() + self.xrep
+                y = -(self.tableau[i].getY() + self.yrep) + int(self.video.canheight)
+                self.view.createpoint(self.canvas, x, y)
         
     def creategraph(self, graphique):
         print("here")
@@ -206,3 +209,12 @@ class Controller:
         coefechelle = (self.scalerealsize/self.scalesize)
         print("dans le save")
         self.filerepo(self.tableau, self.filename, coefechelle)
+
+    def seton_offallpoints(self):
+        if self.statusallpoint:
+            self.view.changecolorblack("status allpoints")
+            self.statusallpoint = False
+        else :
+            self.view.changecolorred("status allpoints")
+            self.statusallpoint = True
+    

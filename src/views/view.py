@@ -76,12 +76,14 @@ class View(tk.Frame):
 
         ZonePointage = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Pointage', labelanchor = 'n', width = 200, height = 100)
         ZonePointage.grid(row = 0,pady = 5, column = 0)
-        self.Bourepere = Button(ZonePointage,text = '+',activebackground= "yellow", command= self.linkrepere )
+        self.Bourepere = Button(ZonePointage,text = '+',activebackground= "yellow", command= self.linkrepere)
         self.Bourepere.grid(row = 0, pady = 10, column = 0)
-        self.BouPointer = Button(ZonePointage,text = 'x', command= self.linkpointage )
+        self.BouPointer = Button(ZonePointage,text = 'x', command= self.linkpointage)
         self.BouPointer.grid(row = 0, pady = 10, column = 1)
         self.Bouechelle = Button(ZonePointage, text = 'scale', command = self.linkechelle)
         self.Bouechelle.grid(row = 0, pady = 10, column = 2 )
+        self.BouStatusAllpoints = Button(ZonePointage,text = 'see allpoints', command= self.linkstatus_allpoints)
+        self.BouStatusAllpoints.grid(row = 0, pady = 10, column = 3 )
     
     def setbind(self):
         self.parent.bind('<Control-o>', self.lienvideobind)
@@ -136,6 +138,8 @@ class View(tk.Frame):
             self.BouPointer.configure( fg="red")
         elif bouton == "echelle":
             self.Bouechelle.configure( fg="red")
+        elif bouton == "status allpoints":
+            self.BouStatusAllpoints.configure( fg="red")
 
     def changecolorblack(self, bouton):
         if bouton == "tout":
@@ -148,6 +152,8 @@ class View(tk.Frame):
             self.BouPointer.configure( fg="black")
         elif bouton == "echelle":
             self.Bouechelle.configure( fg="black")
+        elif bouton == "status allpoints":
+            self.BouStatusAllpoints.configure( fg="black")
 
     def linkpointage(self):
         self.controller.pointage()
@@ -201,3 +207,6 @@ class View(tk.Frame):
 
     def linksave(self):
         self.controller.save()
+
+    def linkstatus_allpoints(self):
+        self.controller.seton_offallpoints()
