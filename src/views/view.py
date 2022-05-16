@@ -61,9 +61,9 @@ class View(tk.Frame):
         ZoneOptions = LabelFrame(ZoneBoutons , borderwidth = 2, text = 'Options', labelanchor = 'n', width = 200, height = 100)
         ZoneOptions.grid(row = 0, column = 1)
 
-        Boustart = Button(ZoneOptions,text = 'start', command=self.lienlecture)
+        Boustart = Button(ZoneOptions,text = '▶', command=self.lienlecture)
         Boustart.grid(row = 0, pady = 10, column = 2)
-        Boupause = Button(ZoneOptions,text = 'Pause', command= self.linkpause)
+        Boupause = Button(ZoneOptions,text = '||', command= self.linkpause)
         Boupause.grid(row = 0, pady = 10, column = 3)
         BouimageSuivante = Button(ZoneOptions,text = '>>|', command= self.linknextimage)
         BouimageSuivante.grid(row = 0, pady = 10, column = 4)
